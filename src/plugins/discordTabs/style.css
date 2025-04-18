@@ -1,0 +1,291 @@
+.vc-discordtabs-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+}
+
+.vc-discordtabs-guild-acronym-icon {
+    height: 1.25rem;
+    width: 1.5rem;
+    min-width: 1.5rem;
+    border-radius: 50%;
+    padding-top: 0.25rem;
+    background-color: var(--background-primary);
+    overflow: hidden;
+}
+
+/* user avatars */
+.vc-discordtabs-tab [class^="wrapper_"] {
+    min-width: 1.5rem;
+}
+
+.vc-discordtabs-name-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.vc-discordtabs-tab-inner {
+    border-radius: 0.5rem;
+    padding: 0.30rem 0 0.25rem 0.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+
+.vc-discordtabs-tab-container,
+.vc-discordtabs-bookmark-container {
+    /* border-bottom: 1px solid var(--border-subtle);  <-- not sure if this looks good so I commented it out for now */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: calc(var(--custom-channel-header-height) - 0.35rem - 1px);
+    overflow: scroll hidden;
+}
+
+.vc-discordtabs-tab-container {
+    /* border-bottom: 1px solid var(--border-subtle);  <-- not sure if this looks good so I commented it out for now */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: calc(var(--custom-channel-header-height) - 0.35rem - 1px);
+    overflow: scroll hidden;
+    padding-top: 0.35rem;
+}
+
+/* scroll bar */
+
+.vc-discordtabs-tab-container::-webkit-scrollbar,
+.vc-discordtabs-bookmark-container::-webkit-scrollbar {
+    width: var(--space-xs);
+    height: var(--space-xs);
+}
+
+.vc-discordtabs-tab-container::-webkit-scrollbar-corner,
+.vc-discordtabs-bookmark-container::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.vc-discordtabs-tab-container::-webkit-scrollbar-thumb,
+.vc-discordtabs-bookmark-container::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: var(--scrollbar-thin-thumb);
+    border: 2px solid transparent;
+    border-radius: 4px;
+    visibility: hidden;
+
+}
+
+.vc-discordtabs-tab-container::-webkit-scrollbar-track,
+.vc-discordtabs-bookmark-container::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-thin-track);
+    visibility: hidden;
+}
+
+.vc-discordtabs-tab-container:hover::-webkit-scrollbar-track,
+.vc-discordtabs-bookmark-container:hover::-webkit-scrollbar-track {
+    visibility: visible;
+}
+
+.vc-discordtabs-tab-container:hover::-webkit-scrollbar-thumb,
+.vc-discordtabs-bookmark-container:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.platform-osx .vc-discordtabs-tab-container {
+    padding-left: 66px;
+}
+
+.vc-discordtabs-container {
+    --discordtabs-red: #f23f42;
+    --discordtabs-blue: #0052b6;
+    --discordtabs-yellow: #f0b132;
+    --discordtabs-green: #24934f;
+    --discordtabs-black: #000;
+    --discordtabs-white: #fff;
+    --discordtabs-orange: #e67e22;
+    --discordtabs-pink: #ff73fa;
+
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    z-index: 100;
+}
+
+.vc-discordtabs-separator {
+    width: 98vw;
+    height: 0.075rem;
+    background: var(--bg-overlay-5);
+    background-color: var(--background-secondary);
+    margin: 0.25rem 1vw;
+}
+
+/* .vc-discordtabs-scroller {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.vc-discordtabs-scroller::-webkit-scrollbar {
+    display: none;
+} */
+
+.vc-discordtabs-channel-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.vc-discordtabs-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0.25rem;
+    width: 13rem;
+    min-width: 13rem;
+    margin-right: 0.25rem;
+    height: 2.6rem;
+    transition: border 80ms ease, outline 80ms ease;
+}
+
+div[data-placement="before"] {
+    border-left: 2px solid var(--green-360);
+    border-radius: 2px;
+}
+
+div[data-placement="after"], button[data-placement="after"] {
+    border-right: 2px solid var(--green-360);
+    border-radius: 2px;
+}
+
+div[data-placement="group"] {
+    outline: 2px solid var(--green-360);
+    outline-offset: -3px;
+}
+
+.vc-discordtabs-tab-dragging {
+    opacity: 0.7;
+    transition: opacity 300ms ease;
+}
+
+.vc-discordtabs-tab-selected {
+    background: var(--bg-overlay-selected);
+    background-color: var(--background-modifier-selected);
+}
+
+.vc-discordtabs-tab-muted:not(.vc-discordtabs-tab-selected) .vc-discordtabs-name-text {
+    color: var(--interactive-muted);
+}
+
+.vc-discordtabs-container [class^="iconContainer_"] {
+    margin: 0 -0.55rem 0 0;
+    pointer-events: none;
+    height: 1rem;
+    transform: scale(0.8);
+}
+
+.vc-discordtabs-tab-muted:not(.vc-discordtabs-tab-selected) .vc-discordtabs-icon,
+.vc-discordtabs-tab-muted:not(.vc-discordtabs-tab-selected) [class^="wrapper_"],
+.vc-discordtabs-tab-muted:not(.vc-discordtabs-tab-selected) [class^="iconContainer_"] {
+    opacity: 0.3;
+}
+
+
+/* channel type container */
+
+.vc-discordtabs-hoverable:hover,
+.vc-discordtabs-tab:hover:not(.vc-discordtabs-tab-selected) {
+    background: var(--bg-overlay-hover);
+    background-color: var(--background-modifier-hover);
+}
+
+.vc-discordtabs-button {
+    background-color: transparent;
+    color: var(--text-normal);
+}
+
+.vc-discordtabs-new-button {
+    margin: 0.35rem;
+    margin-bottom: 8px;
+    border-radius: 0.25rem;
+    display: flex; /* Enable Flexbox */
+    justify-content: center; /* Horizontal center */
+    align-items: center; /* Vertical center */
+    padding-inline: 0.55rem;
+    min-height: 2rem; /* Optional: Ensure minimum tap target size */
+    min-width: 2.3rem; /* Optional: Ensure button isn't collapsed */
+}
+
+.vc-discordtabs-close-button {
+    height: 1rem;
+    padding: 0;
+    margin-right: 0.5rem;
+}
+
+.vc-discordtabs-favorites-star {
+    margin: 0 -0.25rem -1rem -0.75rem;
+    height: 0.75rem;
+    width: 0.75rem;
+}
+
+.vc-discordtabs-tab-content {
+    display: flex;
+    align-items: center;
+    padding-right: 24px;
+    gap: 6px;
+    position: relative;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.vc-discordtabs-typing-container {
+    flex-shrink: 0;
+    margin-left: 1px;
+}
+
+.vc-discordtabs-typing-indicator {
+    transform: scale(0.95);
+    margin-left: auto;
+    padding: 0 1px;
+    fill: var(--text-muted);
+}
+
+.vc-discordtabs-tab:hover:not(.vc-discordtabs-tab-muted) .vc-discordtabs-name-text {
+    color: var(--interactive-active);
+
+}
+
+.vc-discordtabs-notification-badge {
+    --notification-bg: var(--brand-500);
+    --notification-text: var(--white-500);
+
+    min-width: 16px;
+    height: 16px;
+    padding: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    background-color: var(--notification-bg) !important;
+    color: var(--notification-text) !important;
+    box-shadow: 0 2px 4px rgba(0 0 0 / 20%);
+    position: relative;
+    top: 1px;
+    margin-left: 0.30rem;
+
+    &[data-has-mention="true"] {
+        --notification-bg: var(--red-430);
+    }
+}
+
+
+
+@supports (grid-template-columns:subgrid) and (white-space-collapse:collapse) {
+    .vc-discordtabs-container {
+        grid-area: notice;
+    }
+}
