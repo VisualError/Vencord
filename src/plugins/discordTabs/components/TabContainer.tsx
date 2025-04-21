@@ -10,7 +10,7 @@ import { React, useMemo } from "@webpack/common";
 
 import { ChannelTab, useTabsStore, ValidSelections } from "../stores/finalStore";
 import AddButton from "./AddButton";
-import Tab, { useDrop } from "./Tab";
+import Tab from "./Tab";
 
 
 const PlusSmallIcon = findComponentByCodeLazy("0v-5h5a1");
@@ -42,15 +42,15 @@ export default function TabContainer({ data_id: containerId, name, current_windo
     const container = getOrEnsureContainer({ id: containerId, name: name, nodes: {}, size: 0 });
     const orderedTabs = useMemo(() => getOrderedTabs<ChannelTab>(containerId), [containerId, tabs]);
 
-    const [{ isHovering }, drop] = useDrop(() => ({
-        accept: "vc_DiscordTab",
-        collect: monitor => ({
-            isHovering: monitor.isOver(),
-        }),
-        drop: item => {
-            moveTab({ containerId: item.containerId, tabId: item.tabId }, { containerId: container.id, tabId: undefined! }, "after");
-        }
-    }), [containerId]);
+    // const [{ isHovering }, drop] = useDrop(() => ({
+    //     accept: "vc_DiscordTab",
+    //     collect: monitor => ({
+    //         isHovering: monitor.isOver(),
+    //     }),
+    //     drop: item => {
+    //         moveTab({ containerId: item.containerId, tabId: item.tabId }, { containerId: container.id, tabId: undefined! }, "after");
+    //     }
+    // }), [containerId]);
     return (
         <div className={cl("tab-container")}>
             {orderedTabs.map(tab => (

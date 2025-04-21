@@ -34,7 +34,7 @@ export default function useGroupableTab({
     store
 }: UseGroupableTabProps) {
     const elemRef = useRef<HTMLDivElement>(null);
-    const [dragPlacement, setPlacement] = useState<"before" | "after" | "group">();
+    const [dragPlacement, setPlacement] = useState<"before" | "after" | "group" | null>();
 
     // Drag functionality
     const [{ isDragging }, drag] = useDrag(() => ({
@@ -47,7 +47,7 @@ export default function useGroupableTab({
     const [{ isHovering }, drop] = useDrop(() => ({
         accept: "vc_DiscordTab",
         collect: monitor => ({
-            isHovering: monitor.isOver(),
+            isHovering: monitor.isOver({ shallow: true }),
         }),
         canDrop: item => {
             const areTabsDifferent = item.tabId !== tabId;
@@ -58,8 +58,8 @@ export default function useGroupableTab({
             );
         },
         hover: lodash.throttle((item, monitor) => {
-            if (!elemRef.current || !monitor.canDrop()) {
-                setPlacement(undefined);
+            if (!elemRef.current || !monitor.canDrop() || !monitor.isOver({ shallow: true })) {
+                setPlacement(null);
                 return;
             }
 
