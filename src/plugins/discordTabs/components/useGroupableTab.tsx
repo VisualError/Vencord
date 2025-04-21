@@ -5,7 +5,7 @@
  */
 
 import { findByCodeLazy } from "@webpack";
-import { lodash, useRef, useState } from "@webpack/common";
+import { useRef, useState } from "@webpack/common";
 
 export const useDrag = findByCodeLazy("useDrag::spec.begin");
 export const useDrop = findByCodeLazy(/\i=\(0,\i.\i\)\(\i.options\)/); // findByCodeLazy(".options);return", ".collect,");
@@ -57,7 +57,7 @@ export default function useGroupableTab({
                 (!isTargetATabGroup)
             );
         },
-        hover: lodash.throttle((item, monitor) => {
+        hover: (item, monitor) => {
             if (!elemRef.current || !monitor.canDrop() || !monitor.isOver({ shallow: true })) {
                 setPlacement(null);
                 return;
@@ -91,7 +91,7 @@ export default function useGroupableTab({
             }
 
             setPlacement(prev => prev !== placement ? placement : prev);
-        }, 300),
+        },
         drop: item => {
             if (!dragPlacement) return;
 
