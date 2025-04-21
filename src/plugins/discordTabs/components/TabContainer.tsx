@@ -6,7 +6,7 @@
 
 import { classNameFactory } from "@api/Styles";
 import { findComponentByCodeLazy, LazyComponentWebpack } from "@webpack";
-import { lodash, React, useCallback, useMemo } from "@webpack/common";
+import { React, useMemo } from "@webpack/common";
 
 import { ChannelTab, useTabsStore, ValidSelections } from "../stores/finalStore";
 import AddButton from "./AddButton";
@@ -40,7 +40,6 @@ export default function TabContainer({ data_id: containerId, name, current_windo
     const tabs = useTabsStore(state => state.tabs);
     const selectedTabs = useTabsStore(state => state.selectedTabs);
     const container = getOrEnsureContainer({ id: containerId, name: name, nodes: {}, size: 0 });
-    const debouncedMove = useCallback(lodash.debounce(moveTab, 16, { leading: false, trailing: true }), []);
     const orderedTabs = useMemo(() => getOrderedTabs<ChannelTab>(containerId), [containerId, tabs]);
 
     const [{ isHovering }, drop] = useDrop(() => ({
@@ -65,7 +64,7 @@ export default function TabContainer({ data_id: containerId, name, current_windo
                     channelId={tab.channelId}
                     guildId={tab.guildId}
                     onDrop={(targetId, targetContainerId, position) =>
-                        debouncedMove(
+                        moveTab(
                             { tabId: targetId, containerId: targetContainerId },
                             { tabId: tab.id, containerId: container.id },
                             position)
