@@ -57,21 +57,37 @@ export default function TabContainer({ data_id: containerId, name, current_windo
     const scrollBy = useRef(0);
     useEffect(() => {
         const onWheel = e => {
-            e.preventDefault();
-            if (e.deltaY === 0) return;
             const container = ref.current;
+            if (e.deltaY === 0) return;
             if (!container) return;
+            e.preventDefault();
             const maxScrollLeft = container.scrollWidth - container.clientWidth;
             scrollBy.current += e.deltaY;
             scrollBy.current = Math.max(0, Math.min(scrollBy.current, maxScrollLeft));
+            // const step = Math.abs(e.deltaY);
+            // const direction = Math.sign(e.deltaY);
+            // const current = container.scrollLeft;
+
+            // const base = Math.round(current / step) * step;
+            // const next = base + direction * step;
             container.scroll({
                 left: scrollBy.current,
                 behavior: "smooth"
             });
         };
+
+        const scrollEnd = e => {
+            if (!ref.current) return;
+            scrollBy.current = ref.current.scrollLeft;
+        };
+
+        ref.current?.addEventListener("scrollEnd", scrollEnd);
+        ref.current?.addEventListener("dragend", scrollEnd);
         ref.current?.addEventListener("wheel", onWheel, { passive: false });
 
         return () => {
+            ref.current?.removeEventListener("scrollEnd", scrollEnd);
+            ref.current?.removeEventListener("dragend", scrollEnd);
             ref.current?.removeEventListener("wheel", onWheel);
         };
     }, []);
