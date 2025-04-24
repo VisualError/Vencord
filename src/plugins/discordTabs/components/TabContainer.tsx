@@ -6,7 +6,7 @@
 
 import { classNameFactory } from "@api/Styles";
 import { findComponentByCodeLazy, LazyComponentWebpack } from "@webpack";
-import { React, useEffect, useMemo, useRef } from "@webpack/common";
+import { lodash, React, useEffect, useMemo, useRef } from "@webpack/common";
 
 import { ChannelTab, useTabsStore, ValidSelections } from "../stores/finalStore";
 import AddButton from "./AddButton";
@@ -64,30 +64,30 @@ export default function TabContainer({ data_id: containerId, name, current_windo
             const maxScrollLeft = container.scrollWidth - container.clientWidth;
             scrollBy.current += e.deltaY;
             scrollBy.current = Math.max(0, Math.min(scrollBy.current, maxScrollLeft));
-            // const step = Math.abs(e.deltaY);
-            // const direction = Math.sign(e.deltaY);
-            // const current = container.scrollLeft;
-
-            // const base = Math.round(current / step) * step;
-            // const next = base + direction * step;
             container.scroll({
                 left: scrollBy.current,
                 behavior: "smooth"
             });
         };
 
-        const scrollEnd = e => {
-            if (!ref.current) return;
-            scrollBy.current = ref.current.scrollLeft;
+        const handleScrollEnd = lodash.debounce(() => {
+            const container = ref.current;
+            if (!container) return;
+            scrollBy.current = container.scrollLeft;
+            console.log("Scroll finished. Synced scrollBy to:", scrollBy.current);
+        }, 100);
+
+        const updateScrollBy = e => {
+            handleScrollEnd();
         };
 
-        ref.current?.addEventListener("scrollEnd", scrollEnd);
-        ref.current?.addEventListener("dragend", scrollEnd);
+        ref.current?.addEventListener("scroll", updateScrollBy);
+        ref.current?.addEventListener("dragend", updateScrollBy);
         ref.current?.addEventListener("wheel", onWheel, { passive: false });
 
         return () => {
-            ref.current?.removeEventListener("scrollEnd", scrollEnd);
-            ref.current?.removeEventListener("dragend", scrollEnd);
+            ref.current?.removeEventListener("scroll", updateScrollBy);
+            ref.current?.removeEventListener("dragend", updateScrollBy);
             ref.current?.removeEventListener("wheel", onWheel);
         };
     }, []);
