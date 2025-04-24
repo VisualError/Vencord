@@ -6,7 +6,7 @@
 
 import { classNameFactory } from "@api/Styles";
 import { findComponentByCodeLazy, LazyComponentWebpack } from "@webpack";
-import { React, useMemo } from "@webpack/common";
+import { React, useEffect, useMemo, useRef } from "@webpack/common";
 
 import { ChannelTab, useTabsStore, ValidSelections } from "../stores/finalStore";
 import AddButton from "./AddButton";
@@ -51,8 +51,32 @@ export default function TabContainer({ data_id: containerId, name, current_windo
     //         moveTab({ containerId: item.containerId, tabId: item.tabId }, { containerId: container.id, tabId: undefined! }, "after");
     //     }
     // }), [containerId]);
+
+    // good enoggh..
+    const ref = useRef<HTMLDivElement>(null);
+    const scrollBy = useRef(0);
+    useEffect(() => {
+        const onWheel = e => {
+            e.preventDefault();
+            if (e.deltaY === 0) return;
+            const container = ref.current;
+            if (!container) return;
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+            scrollBy.current += e.deltaY;
+            scrollBy.current = Math.max(0, Math.min(scrollBy.current, maxScrollLeft));
+            container.scroll({
+                left: scrollBy.current,
+                behavior: "smooth"
+            });
+        };
+        ref.current?.addEventListener("wheel", onWheel, { passive: false });
+
+        return () => {
+            ref.current?.removeEventListener("wheel", onWheel);
+        };
+    }, []);
     return (
-        <div className={cl("tab-container")}>
+        <div ref={ref} className={cl("tab-container")}>
             {orderedTabs.map(tab => (
                 <MemoizedTab
                     key={tab.id}
